@@ -18,17 +18,18 @@ public class JpaMain {
         try {
             // 비영속
             Member member = new Member();
-            member.setId(101L);
+            member.setId(102L);
             member.setName("HelloJPA");
 
             // 영속성
             System.out.println("=== BEFORE ===");
             em.persist(member);
-            // 준영속성 상태
-            // em.detach(member);
-            // 삭제
-            // em.remove(member);
             System.out.println("=== AFTER ===");
+
+            Member findMember = em.find(Member.class, 102L);
+
+            System.out.println("findMember.id = " + findMember.getId());
+            System.out.println("findMember.name = " + findMember.getName());
 
             tx.commit();
         } catch(Exception e) {
