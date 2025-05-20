@@ -16,7 +16,7 @@ public class Item {
     private int price;
     private int stockQuantity;
 
-    Item() {}
+    public Item() {}
 
     public Long getItemId() {
         return itemId;
