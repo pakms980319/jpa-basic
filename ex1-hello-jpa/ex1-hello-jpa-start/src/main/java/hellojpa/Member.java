@@ -16,13 +16,7 @@ public class Member {
 
     @Embedded
     private Period workPeriod;
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name="city", column=@Column(name = "WORK_CITY")),
-            @AttributeOverride(name="street", column=@Column(name = "WORK_STREET")),
-            @AttributeOverride(name="zipcode", column=@Column(name = "WORK_ZIPCODE"))
-    })
-    private Address workAddress;
+
     @Embedded
     private Address homeAddress;
 
