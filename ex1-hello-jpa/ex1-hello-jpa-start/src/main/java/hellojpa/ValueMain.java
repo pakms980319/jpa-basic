@@ -3,19 +3,15 @@ package hellojpa;
 public class ValueMain {
     public static void main(String[] args) {
 
-        Integer a = 10;
-        Integer b = a;
+        int a = 10;
+        int b = 10;
 
-        a = 7;
+        System.out.println("a == b ? " + (a == b));
 
-        System.out.println("a = " + a);
-        System.out.println("b = " + b);
-        
-        String nameA = "HelloA";
-        String nameB = nameA;
-        
-        nameA = "ByeA";
+        Address addressA = new Address("city", "street", "10000");
+        Address addressB = new Address("city", "street", "10000");
 
-        System.out.println("nameB = " + nameB);
+        System.out.println("addressA == addressB ? " + (addressA == addressB));
+        System.out.println("addressA equals addressB ? " + (addressA.equals(addressB)));
     }
 }
