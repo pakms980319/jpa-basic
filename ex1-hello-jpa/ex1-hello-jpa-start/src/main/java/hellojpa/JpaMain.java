@@ -4,7 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import org.hibernate.Hibernate;
+
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -16,26 +17,33 @@ public class JpaMain {
 
         try {
 
+            Team teamA = new Team();
+            teamA.setName("teamA");
+            em.persist(teamA);
+
+            Team teamB = new Team();
+            teamB.setName("teamB");
+            em.persist(teamB);
+
             Member member1 = new Member();
-            member1.setUsername("hello");
+            member1.setUsername("member1");
+            member1.setTeam(teamA);
             em.persist(member1);
 
             Member member2 = new Member();
-            member2.setUsername("hello");
+            member2.setUsername("member2");
+            member2.setTeam(teamB);
             em.persist(member2);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member1.getId());
-            System.out.println("refMember = " + refMember.getClass());
+            // Member m = em.find(Member.class, member1.getId());
 
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+             List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
+                                        .getResultList();
 
-            System.out.println("refMember = " + refMember.getClass().getName());
 
-            Hibernate.initialize(refMember);  // 강제 초기화
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
 
             tx.commit();
         } catch(Exception e) {
