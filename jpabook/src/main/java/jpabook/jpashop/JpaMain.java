@@ -9,6 +9,8 @@ import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 
+import java.util.List;
+
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -24,6 +26,13 @@ public class JpaMain {
             book.setAuthor("김영한");
 
             em.persist(book);
+
+            List<Book> result = em.createQuery("select i from Item i where type(i) = Book", Book.class)
+                            .getResultList();
+
+            for (Book book1 : result) {
+                System.out.println("book1 = " + book1.getAuthor());
+            }
 
             tx.commit();
         } catch(Exception e) {

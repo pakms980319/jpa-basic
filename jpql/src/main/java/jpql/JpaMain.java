@@ -13,28 +13,35 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Member member = new Member();
+            member.setUsername("teamA");
+            member.setType(MemberType.USER);
+            member.setAge(10);
 
-            for (int i = 0; i < 100; i++) {
-                Member member = new Member();
-                member.setUsername("member" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member);
+            em.persist(team);
 
+            member.setTeam(team);
+            em.persist(member);
 
             em.flush();
             em.clear();
 
-            String query = "select (select avg(m1.age) from Member m1) from Member m";
-            List<Object> result = em.createQuery(query, Object.class)
+            String query = "select m.username, 'HELLO', true from Member m " +
+                            "where m.age between 0 and 10";
+            List<Object[]> result = em.createQuery(query, Object[].class)
                                     .getResultList();
 
-            System.out.println("result.size() = " + result.size());
 
-            for (Object o : result) {
-                System.out.println("o = " + o);
+
+            for (Object[] objects : result) {
+                System.out.println("objects[0] = " + objects[0]);
+                System.out.println("objects[1] = " + objects[1]);
+                System.out.println("objects[2] = " + objects[2]);
             }
-            
+
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
