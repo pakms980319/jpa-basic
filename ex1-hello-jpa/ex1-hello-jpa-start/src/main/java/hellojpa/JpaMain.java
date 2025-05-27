@@ -33,9 +33,9 @@ public class JpaMain {
             // jdbc는 jpa와 관련이 없음 -> flush가 자동으로 안됨 (commit 후 flush가 될 것) -> 강제 flush가 필요
             // em.flush();
 
-            for (Member member1 : resultList) {
-                System.out.println("member1 = " + member1);
-            }
+//            for (Member member1 : resultList) {
+//                System.out.println("member1 = " + member1);
+//            }
 
 
             tx.commit();
